@@ -8,16 +8,12 @@ class Player < Maps::Base
     on_key do |key|
       handle_key(key)
     end
+
     on_bump do |dir, x, y|
       set(x: @prev_x, y: @prev_y)
     end
-    on_action do |sibling, x, y|
-      if parent = @parent
-        if @x == 14 && @y == 8
-          parent.hide
-        end
-      end
 
+    on_action do |sibling, x, y|
       set(x: @prev_x, y: @prev_y)
     end
   end

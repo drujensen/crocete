@@ -11,7 +11,7 @@ module Crokete
     def initialize(map : Maps::Base)
       super(map)
       on_message do |key, value|
-        if value == "quit"
+        if key == "quit" && value == "yes"
           stop
         end
       end
@@ -25,6 +25,9 @@ module Crokete
 
   welcome = Dialogs::Welcome.new
   welcome.add(layout, z: 3)
+
+  quit = Dialogs::Quit.new
+  quit.add(layout, z: 4)
 
   game = Game.new(layout)
   game.run

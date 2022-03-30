@@ -22,7 +22,11 @@ module Menus
       end
 
       if key == '5'
-        Events::Event.message_event(key: "cmd", value: "quit")
+        send(key: "quit", value: "show")
+      end
+
+      if key == 'q'
+        send(key: "quit", value: "yes")
       end
 
       if key == '?'
