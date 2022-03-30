@@ -1,6 +1,6 @@
-class Menus::Welcome < Maps::Sprite
+class Dialogs::Welcome < Maps::Sprite
   property name : String
-  property key_event : Events::EventHandler
+  property key_event : Events::EventHandler?
 
   def initialize
     super(width: 28, height: 6)
@@ -13,9 +13,9 @@ class Menus::Welcome < Maps::Sprite
     │ Name: █                  │
     └──────────────────────────┘
     SPRITE
-    @key_event = Events::Event.register("key") do |event|
-      key = event.as(Events::Key)
-      handle_key(key.key)
+
+    @key_event = on_key do |key|
+      handle_key(key)
     end
   end
 
@@ -26,7 +26,9 @@ class Menus::Welcome < Maps::Sprite
       @text[4][9 + @name.size] = ' '
     elsif key == '\r'
       hide
-      Events::Event.deregister(@key_event)
+      if event = @key_event
+        off(event)
+      end
       Events::Event.message_event(key: "name", value: @name)
     else
       @name = @name + key

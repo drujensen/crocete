@@ -2,37 +2,30 @@ require "tui-engine"
 require "./menus/*"
 require "./scenes/*"
 require "./objects/*"
+require "./dialogs/*"
 
 module Crokete
   VERSION = "0.1.0"
 
-  class MyGame < TuiEngine
+  class Game < TuiEngine
     def initialize(map : Maps::Base)
       super(map)
-      Events::Event.register("message") do |event|
-        if event.as(Events::Message).value == "quit"
+      on_message do |key, value|
+        if value == "quit"
           stop
         end
-        true
       end
     end
   end
 
-  class World < Maps::Frame
-    def initialize
-      super(title: "Crocete")
-    end
-  end
+  layout = Scenes::Layout.new
 
-  world = World.new
-  menu = Menus::Main.new
-  menu.add(world, x: 2, y: world.height - 1, z: 2)
-  profile = Menus::Profile.new
-  profile.add(world, x: world.width - 9, y: 0, z: 2)
-  home = Scenes::Home.new(title: "Home", width: 40, height: 10)
-  home.add(world, x: 2, y: 2, z: 2)
-  welcome = Menus::Welcome.new
-  welcome.add(world, z: 3)
-  game = MyGame.new(world)
+  home = Scenes::Home.new
+  home.add(layout, z: 2)
+
+  welcome = Dialogs::Welcome.new
+  welcome.add(layout, z: 3)
+
+  game = Game.new(layout)
   game.run
 end
