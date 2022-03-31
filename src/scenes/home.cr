@@ -20,8 +20,7 @@ module Scenes
       right = Maps::Box.new(width: 1, height: 4, fill: '|')
       mother = Maps::Base.new(width: 1, height: 1, fill: 'm')
       player = Player.new(width: 1, height: 1, fill: '@')
-      hello = Maps::Text.new(text: "Hello, My Son!")
-      hello.hide
+      hello = Maps::Scrolling.new(text: "Hello, My Son!", speed: 15)
 
       floor.on_action do |sibling, x, y|
         if sibling == player
@@ -33,13 +32,7 @@ module Scenes
 
       mother.on_action do |sibling, x, y|
         if sibling == player
-          hello.show
-        end
-      end
-
-      hello.on_key do |key|
-        if hello.visible
-          hello.hide if key == ' '
+          hello.animate
         end
       end
 
