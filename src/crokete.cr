@@ -3,32 +3,42 @@ require "./menus/*"
 require "./scenes/*"
 require "./objects/*"
 require "./dialogs/*"
+require "./models/*"
 
 module Crokete
   VERSION = "0.1.0"
 
-  class Game < TuiEngine
-    def initialize(map : Maps::Base)
-      super(map)
-      on_message do |key, value|
-        if key == "quit" && value == "yes"
-          stop
-        end
-      end
+  player = Models::Player.instance
+
+  layout = Scenes::Layout.new
+  home = Scenes::Home.new
+  welcome = Dialogs::Welcome.new
+  exit = Dialogs::Exit.new
+
+  home.add(layout, x: 2, y: 2, z: 2)
+  welcome.add(layout, z: 3)
+  exit.add(layout, z: 4)
+
+  home.on_message do |key, value|
+    if key == "home" && value == "exit"
+      home.hide
     end
   end
 
-  layout = Scenes::Layout.new
+  if player.name != "Unknown"
+    welcome.hide
+  end
 
-  home = Scenes::Home.new
-  home.add(layout, z: 2)
+  game = TuiEngine.new(layout)
+  game.on_message do |key, value|
+    if key == "name"
+      player.name = value
+      player.save
+    end
+    if key == "exit" && value == "yes"
+      game.stop
+    end
+  end
 
-  welcome = Dialogs::Welcome.new
-  welcome.add(layout, z: 3)
-
-  quit = Dialogs::Quit.new
-  quit.add(layout, z: 4)
-
-  game = Game.new(layout)
   game.run
 end

@@ -1,7 +1,8 @@
 class Menus::Profile < Maps::Text
-  property name : String = "Unknown"
+  property name : String
 
   def initialize
+    @name = Models::Player.instance.name
     super(@name)
     on_message do |key, value|
       if key == "name"
