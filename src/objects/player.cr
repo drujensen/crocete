@@ -2,8 +2,8 @@ class Player < Maps::Base
   property prev_x : Int32 = 0
   property prev_y : Int32 = 0
 
-  def initialize(height : Int32, width : Int32, fill : Char)
-    super(height: height, width: width, fill: fill)
+  def initialize
+    super(height: 1, width: 1, fill: '@')
 
     on_key do |key|
       handle_key(key)
@@ -13,8 +13,14 @@ class Player < Maps::Base
       set(x: @prev_x, y: @prev_y)
     end
 
-    on_action do |sibling, x, y|
-      set(x: @prev_x, y: @prev_y)
+    on_action do |sibling|
+      if sibling.z == @z
+        hx = @x - sibling.x
+        hy = @y - sibling.y
+        if sibling.text[hy][hx]? != ' '
+          set(x: @prev_x, y: @prev_y)
+        end
+      end
     end
   end
 
