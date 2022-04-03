@@ -30,8 +30,15 @@ module Scenes
       player = Player.new(width: 1, height: 1, fill: '@')
 
       hello = Maps::Scrolling.new(speed: 15, text: <<-TEXT
-        Hello, My Child!
+        Hello, my child!
         You are now 10 years old.
+        It's time for you to
+        become a Crocete trainer.
+        Here are 10 catchers
+        and 1 healing potion.
+        Go to the training center
+        and pick out your first Crocete.
+        Good Luck!
         TEXT
       )
 

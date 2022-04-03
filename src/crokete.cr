@@ -10,12 +10,20 @@ module Crokete
 
   player = Models::Player.instance
 
-  layout = Scenes::Layout.new
+  layout = Maps::Frame.new(title: "Crocete")
   home = Scenes::Home.new
+
+  menu = Menus::Main.new
+  profile = Menus::Profile.new
+
   welcome = Dialogs::Welcome.new
   exit = Dialogs::Exit.new
 
   home.add(layout, x: 2, y: 2, z: 2)
+
+  menu.add(layout, x: 1, y: layout.height - 1, z: 2)
+  profile.add(layout, x: layout.width - player.name.size - 2, y: 0, z: 2)
+
   welcome.add(layout, z: 3)
   exit.add(layout, z: 4)
 

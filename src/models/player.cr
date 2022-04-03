@@ -5,8 +5,8 @@ module Models
     include JSON::Serializable
     property name : String
 
-    @@cache : Path = Path.new("~/.cache/crocete")
-    @@file : Path = Path.new("~/.cache/crocete/crocete.json")
+    @@cache : String = ".cache"
+    @@file : String = ".cache/crocete.json"
     @@instance : Models::Player?
 
     def initialize
@@ -21,7 +21,6 @@ module Models
     end
 
     def self.load
-      puts File.real_path(@@file)
       if File.exists? @@file
         Player.from_json File.read(@@file)
       else
