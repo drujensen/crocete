@@ -1,30 +1,30 @@
 require "json"
 
 module Models
-  class Player
+  class Data
     include JSON::Serializable
     property name : String
 
     @@cache : String = ".cache"
     @@file : String = ".cache/crocete.json"
-    @@instance : Models::Player?
+    @@instance : Models::Data?
 
     def initialize
       @name = "Unknown"
     end
 
-    def self.instance : Player
+    def self.instance : Data
       unless @@instance
-        @@instance = Player.load
+        @@instance = Data.load
       end
-      return @@instance.as(Player)
+      return @@instance.as(Data)
     end
 
     def self.load
       if File.exists? @@file
-        Player.from_json File.read(@@file)
+        Data.from_json File.read(@@file)
       else
-        Player.new
+        Data.new
       end
     end
 

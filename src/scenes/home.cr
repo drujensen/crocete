@@ -1,24 +1,23 @@
 module Scenes
-  class Home < Maps::Base
+  class Home < Maps::Frame
     def initialize
-      super(width: 40, height: 12)
-      title = Maps::Text.new("Your Home")
+      super(title: "Your Home", width: 40, height: 12)
 
       # build house
       home = Maps::Sprite.new(sprite: <<-SPRITE
-      _________________
-      |_______________|
-      |               |
-      |               |
-      |               |
-      |               |
-      |_______ _______|
-      |______| |______|
-      SPRITE
+        _________________
+        |_______________|
+        |               |
+        |               |
+        |               |
+        |               |
+        |_______ _______|
+        |______| |______|
+        SPRITE
       )
 
       door = Maps::Base.new(width: 1, height: 1, fill: '#')
-      mother = Maps::Base.new(width: 1, height: 1, fill: 'm')
+      mother = Maps::Base.new(width: 1, height: 1, fill: 'a')
       player = Player.new
 
       hello = Maps::Scrolling.new(speed: 15, text: <<-TEXT
@@ -46,7 +45,6 @@ module Scenes
         end
       end
 
-      title.add(self, x: 6, y: 0, z: 3)
       hello.add(self, x: 6, y: 1, z: 3)
       home.add(self, x: 6, y: 2)
       door.add(self, x: 14, y: 9)
