@@ -14,6 +14,7 @@ module Crokete
   home = Scenes::Home.new
   field = Scenes::Field.new
   center = Scenes::Center.new
+  battle = Scenes::Battle.new
 
   menu = Menus::Main.new
   profile = Menus::Profile.new
@@ -24,6 +25,7 @@ module Crokete
   home.add(layout, y: 2, z: 2)
   field.add(layout, y: 2, z: 2)
   center.add(layout, y: 2, z: 2)
+  battle.add(layout, y: 2, z: 2)
 
   menu.add(layout, x: 1, y: layout.height - 1, z: 2)
   profile.add(layout, x: layout.width - data.name.size - 2, y: 0, z: 2)
@@ -46,6 +48,14 @@ module Crokete
     end
     if key == "center" && value == "enter"
       center.show
+      field.hide
+    end
+    if key == "battle" && value == "exit"
+      battle.hide
+      field.show
+    end
+    if key == "battle" && value == "enter"
+      battle.show
       field.hide
     end
   end

@@ -26,6 +26,12 @@ module Scenes
         end
       end
 
+      meadow.on_action do |sibling|
+        if sibling == player
+          send("battle", "enter")
+        end
+      end
+
       house1.add(self, x: 2, y: 1, z: 2)
       house_door.add(self, x: 6, y: 5, z: 2)
       house2.add(self, x: 5, y: 17, z: 2)
